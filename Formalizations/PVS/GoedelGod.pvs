@@ -1,0 +1,94 @@
+GoedelGod: THEORY
+ BEGIN
+
+  i: TYPE
+
+  mu: TYPE
+
+  r: (symmetric?[i])
+
+  sigma: TYPE = PRED[i]
+
+  phi, psi: VAR sigma
+
+  Phi, Psi: VAR [mu -> sigma]
+
+  v, w: VAR i
+
+  x, y: VAR mu
+
+  ~: [sigma -> sigma] = LAMBDA phi: LAMBDA w: NOT phi(w);
+
+  /\: [sigma, sigma -> sigma] =
+      LAMBDA phi, psi: LAMBDA w: phi(w) AND psi(w);
+
+  \/: [sigma, sigma -> sigma] = LAMBDA phi, psi: LAMBDA w: phi(w) OR psi(w);
+
+  =>: [sigma, sigma -> sigma] =
+      LAMBDA phi, psi: LAMBDA w: phi(w) IMPLIES psi(w);
+
+  <=>: [sigma, sigma -> sigma] =
+      LAMBDA phi, psi: LAMBDA w: phi(w) IFF psi(w);
+
+  mforall: [[mu -> sigma] -> sigma] =
+      LAMBDA Phi: LAMBDA w: FORALL x: Phi(x)(w);
+
+  mexist: [[mu -> sigma] -> sigma] =
+      LAMBDA Phi: LAMBDA w: EXISTS x: Phi(x)(w);
+
+  mprod: [[[mu -> sigma] -> sigma] -> sigma] =
+      LAMBDA (P: [[mu -> sigma] -> sigma]):
+        LAMBDA w: FORALL (z: [mu -> sigma]): P(z)(w);
+
+  box: [sigma -> sigma] =
+      LAMBDA phi: LAMBDA w: FORALL v: NOT r(w, v) OR phi(v);
+
+  diamond: [sigma -> sigma] =
+      LAMBDA phi: LAMBDA w: EXISTS v: r(w, v) AND phi(v);
+
+  valid: PRED[sigma] = LAMBDA phi: FORALL w: phi(w);
+
+  P: [[mu -> sigma] -> sigma];
+
+  A1: AXIOM valid(mprod(LAMBDA Phi: ~P(Phi) <=> P(LAMBDA x: ~Phi(x))));
+
+  A1a: COROLLARY valid(mprod(LAMBDA Phi: P(LAMBDA x: ~Phi(x)) => ~P(Phi)));
+
+  A1b: COROLLARY valid(mprod(LAMBDA Phi: ~P(Phi) => P(LAMBDA x: ~Phi(x))));
+
+  A2: AXIOM
+    valid(mprod(LAMBDA Phi:
+                  mprod(LAMBDA Psi:
+                          P(Phi) /\
+                           box(mforall(LAMBDA x: Phi(x) => Psi(x)))
+                           => P(Psi))));
+
+  T1: THEOREM valid(mprod(LAMBDA Phi: P(Phi) => diamond(mexist(Phi))));
+
+  G: [mu -> sigma] = LAMBDA x: mprod(LAMBDA Phi: P(Phi) => Phi(x));
+
+  A3: AXIOM valid(P(G));
+
+  C: COROLLARY valid(diamond(mexist(G)));
+
+  A4: AXIOM valid(mprod(LAMBDA Phi: P(Phi) => box(P(Phi))));
+
+  ess: [[mu -> sigma], mu -> sigma] =
+      LAMBDA Phi, x:
+        Phi(x) /\
+         mprod(LAMBDA Psi:
+                 Psi(x) => box(mforall(LAMBDA y: Phi(y) => Psi(y))));
+
+  T2: THEOREM valid(mforall(LAMBDA x: G(x) => ess(G, x)));
+
+  NE: [mu -> sigma] =
+      LAMBDA x: mprod(LAMBDA Phi: ess(Phi, x) => box(mexist(Phi)))
+
+  A5: AXIOM valid(P(NE))
+
+  T3: THEOREM valid(box(mexist(G)))
+
+  C2: COROLLARY valid(mexist(G))
+
+  MC: LEMMA valid(phi => box(phi))
+ END GoedelGod
