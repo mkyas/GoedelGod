@@ -1,9 +1,9 @@
 GoedelGod: THEORY
  BEGIN
 
-  i: TYPE
+  i: TYPE+ 
 
-  mu: TYPE
+  mu: TYPE+
 
   r: (symmetric?[i])
 
