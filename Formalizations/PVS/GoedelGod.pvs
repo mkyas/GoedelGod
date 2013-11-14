@@ -48,6 +48,8 @@ GoedelGod: THEORY
 
   ⊨: PRED[sigma] = LAMBDA phi: FORALL w: phi(w);
 
+  dia: LEMMA  ⊨(◇(~phi)<=>(~(☐(phi))))
+
   P: [[mu -> sigma] -> sigma];
 
   A1: AXIOM ⊨(Π(LAMBDA Phi: ~P(Phi) <=> P(LAMBDA x: ~Phi(x))));
