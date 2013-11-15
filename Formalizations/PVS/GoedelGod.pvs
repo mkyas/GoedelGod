@@ -5,7 +5,7 @@ GoedelGod: THEORY
 
   mu: TYPE+
 
-  r: (symmetric?[i])
+  r: (LAMBDA (R: PRED[[i, i]]): reflexive?[i](R) AND symmetric?[i](R))
 
   sigma: TYPE = PRED[i]
 
@@ -51,6 +51,8 @@ GoedelGod: THEORY
   dia_duality: LEMMA ⊨(◇(~phi)<=>(~(☐(phi))))
 
   box_duality: LEMMA ⊨(☐(~phi)<=>(~(◇(phi))))
+
+  T: THEOREM ⊨(☐(phi)=>(phi))
 
   Positive: [[mu -> sigma] -> sigma];
 
