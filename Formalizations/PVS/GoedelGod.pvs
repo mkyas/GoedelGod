@@ -38,7 +38,7 @@ GoedelGod: THEORY
 
   Π: [[[mu -> sigma] -> sigma] -> sigma] =
       LAMBDA (P: [[mu -> sigma] -> sigma]):
-        LAMBDA w: FORALL (z: [mu -> sigma]): P(z)(w);
+        LAMBDA w: FORALL Phi: P(Phi)(w);
 
   ☐ : [sigma -> sigma] =
       LAMBDA phi: LAMBDA w: FORALL v: NOT r(w, v) OR phi(v);
@@ -48,32 +48,34 @@ GoedelGod: THEORY
 
   ⊨: PRED[sigma] = LAMBDA phi: FORALL w: phi(w);
 
-  dia: LEMMA  ⊨(◇(~phi)<=>(~(☐(phi))))
+  dia_duality: LEMMA ⊨(◇(~phi)<=>(~(☐(phi))))
 
-  P: [[mu -> sigma] -> sigma];
+  box_duality: LEMMA ⊨(☐(~phi)<=>(~(◇(phi))))
 
-  A1: AXIOM ⊨(Π(LAMBDA Phi: ~P(Phi) <=> P(LAMBDA x: ~Phi(x))));
+  Positive: [[mu -> sigma] -> sigma];
 
-  A1a: COROLLARY ⊨(Π(LAMBDA Phi: P(LAMBDA x: ~Phi(x)) => ~P(Phi)));
+  A1: AXIOM ⊨(Π(LAMBDA Phi: ~Positive(Phi) <=> Positive(LAMBDA x: ~Phi(x))));
 
-  A1b: COROLLARY ⊨(Π(LAMBDA Phi: ~P(Phi) => P(LAMBDA x: ~Phi(x))));
+  A1a: COROLLARY ⊨(Π(LAMBDA Phi: Positive(LAMBDA x: ~Phi(x)) => ~Positive(Phi)));
+
+  A1b: COROLLARY ⊨(Π(LAMBDA Phi: ~Positive(Phi) => Positive(LAMBDA x: ~Phi(x))));
 
   A2: AXIOM
     ⊨(Π(LAMBDA Phi:
                   Π(LAMBDA Psi:
-                          P(Phi) /\
+                          Positive(Phi) /\
                            ☐ (mforall(LAMBDA x: Phi(x) => Psi(x)))
-                           => P(Psi))));
+                           => Positive(Psi))));
 
-  T1: THEOREM ⊨(Π(LAMBDA Phi: P(Phi) => ◇ (mexist(Phi))));
+  T1: THEOREM ⊨(Π(LAMBDA Phi: Positive(Phi) => ◇ (mexist(Phi))));
 
-  G: [mu -> sigma] = LAMBDA x: Π(LAMBDA Phi: P(Phi) => Phi(x));
+  G: [mu -> sigma] = LAMBDA x: Π(LAMBDA Phi: Positive(Phi) => Phi(x));
 
-  A3: AXIOM ⊨(P(G));
+  A3: AXIOM ⊨(Positive(G));
 
   C: COROLLARY ⊨(◇ (mexist(G)));
 
-  A4: AXIOM ⊨(Π(LAMBDA Phi: P(Phi) => ☐ (P(Phi))));
+  A4: AXIOM ⊨(Π(LAMBDA Phi: Positive(Phi) => ☐ (Positive(Phi))));
 
   ess: [[mu -> sigma], mu -> sigma] =
       LAMBDA Phi, x:
@@ -86,7 +88,7 @@ GoedelGod: THEORY
   NE: [mu -> sigma] =
       LAMBDA x: Π(LAMBDA Phi: ess(Phi, x) => ☐ (mexist(Phi)))
 
-  A5: AXIOM ⊨(P(NE))
+  A5: AXIOM ⊨(Positive(NE))
 
   T3: THEOREM ⊨(☐ (mexist(G)))
 
