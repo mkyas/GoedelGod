@@ -52,6 +52,8 @@ GoedelGod: THEORY
 
   box_duality: LEMMA ⊨(☐(~phi)<=>(~(◇(phi))))
 
+  K: THEOREM ⊨(☐(phi => psi) => (☐(phi) => ☐(psi)))
+
   T: THEOREM ⊨(☐(phi)=>(phi))
 
   Positive: [[mu -> sigma] -> sigma];
