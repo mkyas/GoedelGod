@@ -94,6 +94,10 @@ GoedelGod: THEORY
 
   A5: AXIOM ⊨(Positive(NE))
 
+  L1: LEMMA ⊨(mexist(G) => (☐(mexist(G))))
+
+  L2: LEMMA ⊨(◇(mexist(G)) => (☐(mexist(G))))
+
   T3: THEOREM ⊨(☐ (mexist(G)))
 
   C2: COROLLARY ⊨(mexist(G))
