@@ -1,3 +1,4 @@
+
 GoedelGod: THEORY
  BEGIN
 
@@ -93,10 +94,6 @@ GoedelGod: THEORY
       LAMBDA x: Π(LAMBDA Phi: ess(Phi, x) => ☐ (mexist(Phi)))
 
   A5: AXIOM ⊨(Positive(NE))
-
-  L1: LEMMA ⊨(mexist(G) => (☐(mexist(G))))
-
-  L2: LEMMA ⊨(◇(mexist(G)) => (☐(mexist(G))))
 
   T3: THEOREM ⊨(☐ (mexist(G)))
 
